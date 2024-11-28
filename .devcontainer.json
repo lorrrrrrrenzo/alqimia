@@ -1,4 +1,5 @@
 {
     "name": "alqimia",
-    "image": "elixir"
+    "image": "elixir",
+    "postAttachCommand": "echo 'Type iex (and press enter) to start using elixir'"
 }
