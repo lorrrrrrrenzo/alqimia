@@ -13,9 +13,18 @@
 
 ## Why
 
-```elixir
+### Commitments
 
-```
+* Create self-sufficiency
+
+  * Ability to find and do tutorials
+  * Judge learning materials online
+  * Find
+
+* Today's Goals
+
+  * introduction to the basics of Elixir programming
+  * develop a sense of what role Elixir plays in the tech ecosystem
 
 <!-- livebook:{"branch_parent_index":0} -->
 
@@ -221,6 +230,68 @@ What is going on here?!
 ![](files/add_one.jpeg)
 
 <!-- livebook:{"break_markdown":true} -->
+
+We've created an anonymous function that takes a number, increments it by one, and returns it.
+
+A couple of notes:
+
+* When writing any function, the last statement is the return value
+
+<!-- livebook:{"force_markdown":true} -->
+
+```elixir
+fn x -> x + 2 end # "x + 2" is the last statement, and so that is returned value
+
+def add_twelve(x) do
+  x + 12 # this is the last statement, and so that is the returned value
+end
+
+def do_some_things_and_return_same(x) do
+  IO.puts("hello")
+  IO.puts("\neveryone")
+
+  y = 29
+  another_greeting = "Hello World"
+  IO.puts(another_greeting)
+
+  x # despite everything we've done above, this is the value that is returned
+end
+```
+
+Now, normally we wouldn't return the unmodified value -- we typically call functions in order to manipulate values so that they can be used by some other process.
+
+---
+
+Now back to functions on collections.
+
+Suppose I have a `List` of numbers, and I want to add one to them. How can I approach that?
+
+<!-- livebook:{"force_markdown":true} -->
+
+```elixir
+some_numbers = [1,2,3,4]
+
+Enum.map(some_numbers, fn x -> x + 1 end) # => [2, 3, 4, 5]
+
+```
+
+**Exercises:**
+
+1. Find the documentation page of the Enum page online. Which version of Elixir is it for?
+2. Describe the `Enum.map/2`
+3. Why do I have to include the `/2` when mentioning `Enum.map`?
+4. Describe the difference between `Enum.map/2` and `Enum.map_every/3`?
+5. Why does `Enum.map_every/3` mention `/3`?
+
+```elixir
+some_numbers = [1,2,3,4]
+Enum.map(some_numbers, fn x -> x + 1 end)
+
+add_two = fn x -> x + 2 end
+Enum.map(some_numbers, add_two)
+
+#add_two.(10)
+```
 
 
 
