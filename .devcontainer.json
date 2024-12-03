@@ -1,5 +1,14 @@
 {
     "name": "alqimia",
     "image": "elixir",
-    "postAttachCommand": "echo 'Type iex (and press enter) to start using elixir'"
+    "postAttachCommand": "echo 'Type iex (and press enter) to start using elixir'",
+    "customizations": {
+		// Configure properties specific to VS Code.
+		"vscode": {
+			"settings": {},
+			"extensions": [
+				"JakeBecker.elixir-ls"
+			]
+		}
+	}
 }
