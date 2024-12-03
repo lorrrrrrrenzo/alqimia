@@ -1,0 +1,327 @@
+<!-- livebook:{"file_entries":[{"name":"add_one.jpeg","type":"attachment"},{"name":"add_one_breakdown.jpeg","type":"attachment"},{"name":"var-val.jpeg","type":"attachment"}]} -->
+
+# Alqimia December 1
+
+## Plan of The Day
+
+1. Why Elixir
+2. Introduction to Elixir Programming
+3. Break
+4. Videos & Discussion
+5. Complex Systems Discussion
+6. Open Study: Workstation Setup, Coding Exercises
+
+## Why
+
+### Commitments
+
+* Create self-sufficiency
+
+  * Ability to find and do tutorials
+  * Judge learning materials online
+  * Find
+
+* Today's Goals
+
+  * introduction to the basics of Elixir programming
+  * develop a sense of what role Elixir plays in the tech ecosystem
+
+<!-- livebook:{"branch_parent_index":0} -->
+
+## Section
+
+## Introduction to Elixir Programming
+
+<!-- livebook:{"branch_parent_index":3} -->
+
+## Values
+
+Values are a fundamental part of computer programming, and it is fair to consider all computer programming to be the setting, manipulation, and transmission of values.
+
+Let's begin with these basic value types, _numbers_, _strings_, and _lists_. Let's call numbers and strings "simple", and _lists_ "collections".
+
+Examples of Concrete Values:
+
+<!-- livebook:{"force_markdown":true} -->
+
+```elixir
+1 # The _number_ One
+
+
+"Lorenzo" # The _string_ 'Lorenzo'
+
+
+[1,1,1,1] # A List of four numbers, all 'one'
+
+
+["I", "ate", "sushi"] # A List of strings, the three strings "I", "ate", and sushi
+```
+
+### Exercises
+
+1. What are some more numbers?
+2. What are some more strings?
+3. Can numbers be a string? If so, give me an example.
+
+```elixir
+IO.puts(1) # the number one
+
+IO.puts("Lorenzo")
+
+# We need to perform a conversion given how Elixir handles printing
+# Lists of numbers
+[1,1,1,1] |> Enum.map(fn x -> Integer.to_string(x) end) |> IO.puts
+
+IO.puts(["I", "ate", "sushi"])
+```
+
+<!-- livebook:{"branch_parent_index":3} -->
+
+## Variables & Assignment
+
+Virtually every time you have a value, you have the need to use it more than once. Instead of writing it out each time, you can **_assign_** a **_value_** to a **_variable_**.
+
+Let's try it out:
+
+<!-- livebook:{"force_markdown":true} -->
+
+```elixir
+x = 1
+IO.puts(x) # what do we expect this to output?
+
+y = 9
+# What is the value of y?
+IO.puts()
+
+
+zzz # ERROR: there is no value in the variable 'zzz', so this will return an error
+
+```
+
+```elixir
+x = 1
+IO.puts(x) # => 1
+
+y = 9
+IO.puts(y) # => 9
+
+
+IO.puts(zzz) ## ERROR
+```
+
+![](files/var-val.jpeg)
+
+<!-- livebook:{"break_markdown":true} -->
+
+We can also **change** the value assigned to a variable.
+This is done exactly how we assigned it in the first place.
+
+```elixir
+x = 1
+IO.puts(x) # => 1
+
+x = 9999
+IO.puts(x) # => 9999
+```
+
+## Manipulation of Values & Variables
+
+As we said before, the manipulation of values is central to _any_ programming task. To see this, let's try out addition:
+
+```elixir
+1 + 2
+```
+
+This also works as expected if we do the same operation on variables. Let's see:
+
+```elixir
+# Assigning the number '1' to the variable x
+x = 1
+
+# Assigning the number '2' to the variable y
+y = 2
+
+
+## adding x and y
+x + y
+```
+
+### Exercises
+
+1. What other operations can you think of? (-, *, ^)
+2. Subtraction
+3. Multiplication
+4. What would happen if you tried to do addition with a variable that had no value?
+
+## Functions
+
+As with values, we find ourselves constantly reusing functions,
+
+```elixir
+# notably, functions are themselves values, 
+# and function names are themselves variables
+add_one = fn x -> x + 1 end
+
+IO.puts(add_one.(1))
+
+```
+
+## Built-In Functions
+
+As with any programming language, Elixir has a very large suite of built-in functions available for us to use. These range from very simple functions -- like `:math.pow/2` to compute the exponent, or `Integer.to_string/2` to convert a string to a proper number, if possible -- to advanced functions that handle complicated functionality that would be very difficult to implement oneself. One such example of this is `Node.spawn_link/4`, used in a distributed Elixir system when you need to send work to other compute nodes.
+
+_**All programs will be a mixture of 1) functions you define yourself and 2) built-in functions.**_
+
+<!-- livebook:{"branch_parent_index":3} -->
+
+## Functions on Collections
+
+One very frequently used built-in library is called [`Enum`](https://hexdocs.pm/elixir/Enum.html), which is short for "Enumerable".
+
+---
+
+**Enumerable:** An enumerable is a container holding or more objects. 'Enumerable' here means 'countable'. Lists, which we mentioned above, is one such enumerable.
+
+<!-- livebook:{"force_markdown":true} -->
+
+```elixir
+[1,1,1,1,1] # A list is one example of an enumerable
+
+["I", "refused", "sushi"] # another list
+
+
+%{name: "Lorenzo", job_title: "Quantitative R+D"} # This is a map, another kind of Enumerable
+```
+
+The [Enum](https://hexdocs.pm/elixir/Enum.html) package is valuable because Elixir encourages programmers to operate on _collections_ of items whenever possible. For our first experience with the Enum package, lets look at `Enum.map/2`.
+
+`Enum.map/2` takes two arguments: an enumerable (e.g. a `List`), and a function to apply to every element of that List.
+
+---
+
+_A_ `List` _has zero or more elements, aka 'items'_
+
+<!-- livebook:{"force_markdown":true} -->
+
+```elixir
+
+[] # A zero element List
+
+["element_one"] # a one-element List
+
+["element_one", "element_two", "element_three", "element_four"] # A four-element List. 
+
+```
+
+---
+
+For our first use of `Enum.map/2`, let's define a function that increments a number by one
+
+<!-- livebook:{"force_markdown":true} -->
+
+```elixir
+add_one = fn x -> x + 1 end
+```
+
+What is going on here?!
+
+<!-- livebook:{"break_markdown":true} -->
+
+![](files/add_one.jpeg)
+
+<!-- livebook:{"break_markdown":true} -->
+
+We've created an anonymous function that takes a number, increments it by one, and returns it.
+
+A couple of notes:
+
+* When writing any function, the last statement is the return value
+
+<!-- livebook:{"force_markdown":true} -->
+
+```elixir
+fn x -> x + 2 end # "x + 2" is the last statement, and so that is returned value
+
+def add_twelve(x) do
+  x + 12 # this is the last statement, and so that is the returned value
+end
+
+def do_some_things_and_return_same(x) do
+  IO.puts("hello")
+  IO.puts("\neveryone")
+
+  y = 29
+  another_greeting = "Hello World"
+  IO.puts(another_greeting)
+
+  x # despite everything we've done above, this is the value that is returned
+end
+```
+
+Now, normally we wouldn't return the unmodified value -- we typically call functions in order to manipulate values so that they can be used by some other process.
+
+---
+
+Now back to functions on collections.
+
+Suppose I have a `List` of numbers, and I want to add one to them. How can I approach that?
+
+<!-- livebook:{"force_markdown":true} -->
+
+```elixir
+some_numbers = [1,2,3,4]
+
+Enum.map(some_numbers, fn x -> x + 1 end) # => [2, 3, 4, 5]
+
+```
+
+**Exercises:**
+
+1. Find the documentation page of the Enum page online. Which version of Elixir is it for?
+2. Describe the `Enum.map/2`
+3. Why do I have to include the `/2` when mentioning `Enum.map`?
+4. Describe the difference between `Enum.map/2` and `Enum.map_every/3`?
+5. Why does `Enum.map_every/3` mention `/3`?
+
+```elixir
+some_numbers = [1,2,3,4]
+Enum.map(some_numbers, fn x -> x + 1 end)
+
+add_two = fn x -> x + 2 end
+Enum.map(some_numbers, add_two)
+
+#add_two.(10)
+```
+
+
+
+## Break
+
+Coffee, Bio, Chat
+
+## Watch Talk
+
+1. [Why We've Adopted Elixir](https://www.youtube.com/watch?v=zL2wcqS78UA)
+2. [Elixir, The Documentary](https://www.youtube.com/watch?v=lxYFOM3UJzo)
+
+To Do: Create a glossary for both.
+
+## Complex Systems Study
+
+Here we will study a short complex systems text and discuss it.
+
+Candidates texts:
+
+* God and Golem
+* Systemantics
+* The Human Use of Human Beings
+* Out of the Tar Pit
+
+## Study Hall / Open Study
+
+Possible activities:
+
+* Setting up development environments on personal workstations
+* Finding and working through additional good tutorials
+* Watching additional conference talks
+* Taking note of personal interests of attendees

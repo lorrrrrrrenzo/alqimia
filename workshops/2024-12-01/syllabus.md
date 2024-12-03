@@ -17,6 +17,7 @@ _December 1st, 2024_
     * Introducing Processes and Supervision
 * Learning to Learn To Code
     * Google searches
+    * Stack Overflow
     * Documentation Pages
     * Using LLMs wisely
 * Introduction to GitHub and Replit
