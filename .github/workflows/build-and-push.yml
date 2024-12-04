@@ -55,5 +55,6 @@ jobs:
       # Notify success (optional)
       - name: Notify success
         if: success()
-        run: echo "Image built and pushed successfully: ghcr.io/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} and :${{ env.COMMIT_SHA_TAG }}"
+        run: |
+          echo "Image built and pushed successfully: ghcr.io/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} and :${{ env.COMMIT_SHA_TAG }}"
 ...
