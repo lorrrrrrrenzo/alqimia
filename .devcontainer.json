@@ -1,6 +1,6 @@
 {
     "name": "alqimia",
-    "image": "elixir",
+    "image": "ghcr.io/lorrrrrrrenzo/elixir-dev:01ba23ba4a7a1494b770aaed3fdb361a096dc12e",
     "postAttachCommand": "echo 'Type iex (and press enter) to start using elixir'",
     "customizations": {
 		// Configure properties specific to VS Code.
