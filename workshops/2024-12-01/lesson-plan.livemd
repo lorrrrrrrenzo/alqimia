@@ -293,8 +293,6 @@ Enum.map(some_numbers, add_two)
 #add_two.(10)
 ```
 
-
-
 ## Break
 
 Coffee, Bio, Chat
