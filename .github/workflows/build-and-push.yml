@@ -1,0 +1,59 @@
+---
+name: Build and Push Docker Image
+
+on:
+  # Trigger on pushes to main and on manual dispatch with inputs
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      image-name:
+        description: 'Docker image name'
+        required: false
+        default: 'elixir-dev'
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up QOL variables
+      - name: Set up image variables
+        id: vars
+        run: |
+          echo "IMAGE_NAME=${{ github.repository_owner }}/${{ github.event.inputs.image-name || 'elixir-dev' }}" >> $GITHUB_ENV
+          echo "IMAGE_TAG=latest" >> $GITHUB_ENV
+          echo "COMMIT_SHA_TAG=${{ github.sha }}" >> $GITHUB_ENV
+
+      # Log in to the GitHub Container Registry
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Build the Docker image
+      - name: Build Docker image
+        run: |
+          docker build \
+            -f images/elixir-dev.dockerfile \
+            -t ghcr.io/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} \
+            -t ghcr.io/${{ env.IMAGE_NAME }}:${{ env.COMMIT_SHA_TAG }} .
+
+      # Push the Docker images
+      - name: Push Docker image
+        run: |
+          docker push ghcr.io/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+          docker push ghcr.io/${{ env.IMAGE_NAME }}:${{ env.COMMIT_SHA_TAG }}
+
+      # Notify success (optional)
+      - name: Notify success
+        if: success()
+        run: echo "Image built and pushed successfully: ghcr.io/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} and :${{ env.COMMIT_SHA_TAG }}"
+...
